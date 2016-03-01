@@ -1,0 +1,52 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<script>
+  window.XBehaviors = window.XBehaviors || {};
+
+  /**
+   * Use `Behaviors.XBemBehavior` to implement BEM class naming withing your
+   * component.
+   *
+   * https://en.bem.info/method/naming-convention/
+   *
+   * @demo demo/index.html
+   * @polymerBehavior
+   */
+  XBehaviors.XBemBehavior = {
+    properties: {},
+
+    /**
+     * Computes the classname using the BEM syntax.
+     *
+     * @param  {String} block       Block name.
+     * @param  {String=} element    Element name. Use '' if non-applicable.
+     * @param  {String>} modifiers  Modifiers (space-separated list).
+     * @return {String}             Classname with BEM syntax.
+     */
+    bemClass: function(block, element, modifiers) {
+      var classes = [];
+      var baseClass;
+
+      // Block value is mandatory.
+      if (block) {
+        // Base class
+        baseClass = block.trim().toLowerCase();
+
+        // Possibly concatenate the element-name to the block-name.
+        if (element && element.length) {
+          baseClass += '__' + element.trim().toLowerCase();
+        }
+        classes.push(baseClass);
+
+        // Possibly add modifiers classes.
+        if (modifiers && modifiers.split(' ').length) {
+          modifiers.split(' ').forEach(function(m) {
+            classes.push(baseClass + '--' + m.trim().toLowerCase());
+          })
+        }
+      }
+
+      return classes.join(' ');
+    }
+  };
+</script>
