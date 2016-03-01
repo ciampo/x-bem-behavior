@@ -17,4 +17,5 @@ Special block text is green.
 ```
 
 ##Install
-bower install --save x-bem-behavior
+
+`bower install --save x-bem-behavior`
