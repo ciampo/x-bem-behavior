@@ -20,7 +20,7 @@
      *
      * @param  {String} block       Block name.
      * @param  {String=} element    Element name. Use '' if non-applicable.
-     * @param  {String>} modifiers  Modifiers (space-separated list).
+     * @param  {String=} modifiers  Modifiers (space-separated list).
      * @return {String}             Classname with BEM syntax.
      */
     bemClass: function(block, element, modifiers) {
@@ -28,7 +28,7 @@
       var baseClass;
 
       // Block value is mandatory.
-      if (block) {
+      if (block && block.length) {
         // Base class
         baseClass = block.trim().toLowerCase();
 

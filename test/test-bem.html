@@ -1,0 +1,38 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../x-bem-behavior.html">
+
+<dom-module id="test-bem">
+  <template>
+    <p id="el" class$="{{bemClass(blockName, elementName, modifierNames)}}"></p>
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'test-bem',
+
+    properties: {
+      blockName: {
+        type: String,
+        value: null
+      },
+
+      elementName: {
+        type: String,
+        value: null
+      },
+
+      modifierNames: {
+        type: String,
+        value: null
+      }
+    },
+
+    behaviors: [
+      XBehaviors.XBemBehavior
+    ]
+  });
+
+</script>

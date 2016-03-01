@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="test-bem.html">
+  </head>
+  <body>
+
+    <test-fixture id="bem-test-element-fixture">
+      <template>
+        <test-bem></test-bem>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('BEM naming conventions', function() {
+
+        var myEl;
+        var blockName = 'block';
+        var elementName = 'element';
+        var modifierNames = ['modifier1', 'modifier2'];
+
+        setup(function() {
+          myEl = fixture('bem-test-element-fixture');
+        });
+
+        test('blockName attribute', function() {
+          myEl.blockName = blockName;
+          assert.equal(myEl.blockName, blockName);
+        });
+
+        test('Block class', function() {
+          myEl.blockName = blockName;
+          assert.equal(myEl.$.el.classList.contains(blockName), true);
+        });
+
+        // bem-syntax: B__E
+        test('B__E', function() {
+          myEl.blockName = blockName;
+          myEl.elementName = elementName;
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '__' + elementName), true);
+        });
+
+        // bem syntax: B--M1 B--M2
+        test('B--M1 B--M2', function() {
+          myEl.blockName = blockName;
+          myEl.modifierNames = modifierNames.join(' ');
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '--' + modifierNames[0]), true);
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '--' + modifierNames[1]), true);
+        });
+
+        // bem-syntax: B__E B__E--M1 B__E--M2
+        test('B__E B__E--M1 B__E--M2', function() {
+          myEl.blockName = blockName;
+          myEl.elementName = elementName;
+          myEl.modifierNames = modifierNames.join(' ');
+
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '__' + elementName), true);
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '__' + elementName + '--' + modifierNames[0]), true);
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '__' + elementName + '--' + modifierNames[1]), true);
+        });
+
+        // trim & lowercase
+        test('Trim & lowercase', function() {
+          function spaceUpper(s) {
+            return ' ' + s.toUpperCase() + ' ';
+          }
+
+          myEl.blockName = spaceUpper(blockName);
+          myEl.elementName = spaceUpper(elementName);
+          myEl.modifierNames = modifierNames.map(spaceUpper).join(' ');
+
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '__' + elementName), true);
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '__' + elementName + '--' + modifierNames[0]), true);
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '__' + elementName + '--' + modifierNames[1]), true);
+        });
+
+        // null values
+        test('Null blockName', function() {
+          myEl.blockName = null;
+
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '__' + elementName), false);
+        });
+
+        // empty block name
+        test('Empty blockName', function() {
+          myEl.blockName = '';
+
+          assert.equal(myEl.$.el.classList.contains(
+              blockName + '__' + elementName), false);
+        });
+
+      });
+    </script>
+
+  </body>
+</html>
