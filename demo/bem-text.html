@@ -1,0 +1,63 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../x-bem-behavior.html">
+
+<dom-module id="bem-text">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      .block-name {
+        color: black;
+        margin-bottom: 10px;
+      }
+
+      .block-name__child {
+        padding-left: 20px;
+        color: blue;
+      }
+
+      .block-name--modifier {
+        color: green;
+      }
+
+    </style>
+
+    <div class$="{{bemClass(blockName)}}">
+      Default block text is black.
+
+      <div class$="{{bemClass(blockName, 'child')}}">
+        Block children text is blue.
+      </div>
+    </div>
+
+    <div class$="{{bemClass(blockName, '', 'modifier')}}">
+      Special block text is green.
+    </div>
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'bem-text',
+
+      properties: {
+        /**
+         * BEM block name.
+         * @type {String}
+         */
+        blockName: {
+          type: String,
+          value: 'block-name'
+        }
+      },
+
+      behaviors: [XBehaviors.XBemBehavior]
+
+    });
+
+  </script>
+</dom-module>
